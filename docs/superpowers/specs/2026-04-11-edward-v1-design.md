@@ -188,19 +188,38 @@ Accepts `{ idea: ContentIdea }`. Logs to console in v1. Returns `{ ok: true }`.
 
 ## Design Tokens
 
+### Colors
+
 ```
-Background:      #0a0a0a
-Surface:         #141414
-Border:          #262626
-Text primary:    #fafafa
-Text secondary:  #a1a1aa
-Accent blue:     #3b82f6  (wFrankn)
-Accent purple:   #8b5cf6  (TechyFRNK)
-Accent green:    #22c55e  (justFRNKNGaming)
-Accent amber:    #f59e0b  (VGFAM)
+Background:       #0a0a0a   (base layer)
+Surface mid:      #111111   (between base and cards — for subtle depth)
+Surface:          #141414   (cards, panels)
+Surface elevated: #1a1a1a   (hover states, dropdowns, modals)
+Border:           rgba(255,255,255,0.06)  (soft — breathes with any bg)
+Text primary:     #fafafa
+Text secondary:   #94a3b8   (slate family — complements blue accent)
+
+Accent blue:      #3b82f6   (wFrankn)
+Accent purple:    #8b5cf6   (TechyFRNK)
+Accent green:     #22c55e   (justFRNKNGaming)
+Accent amber:     #f59e0b   (VGFAM)
 ```
 
-Font: system font stack (`-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`). Metric numbers: 32–48px bold. Body text: 16px minimum (11–13px inside cards at mobile density).
+**Accent opacity tiers:**
+- Full saturation (`#3b82f6`) — interactive elements, "Go" buttons, active states, focus rings
+- 15% opacity (`#3b82f620`) — badge fills, channel indicator backgrounds, subtle row tints
+- 10% opacity (`#3b82f619`) — hover fills on list rows
+
+Reserve full-brightness accents for things the user can interact with. Use opacity tiers for decorative and status uses.
+
+### Typography
+
+- **Display / metrics:** [Geist](https://vercel.com/font) — headings, channel names, large metric numbers
+- **Body / UI:** system stack (`-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`) — labels, descriptions, button text
+
+**Metric numbers (32–48px bold):** `letter-spacing: -0.02em` to `-0.03em`. Default tracking at large sizes reads loose.
+
+**Dense card text (11–13px):** minimum `font-weight: 500`, `line-height: 1.4`. Regular weight below 13px disappears on low-DPI screens.
 
 ---
 
