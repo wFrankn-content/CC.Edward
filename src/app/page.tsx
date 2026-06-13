@@ -6,7 +6,8 @@ import { ChannelDropdown } from '@/components/ChannelDropdown'
 import { StatCard } from '@/components/StatCard'
 import { VideoRow } from '@/components/VideoRow'
 import { getChannelAccent } from '@/lib/types'
-import type { DailyBriefing, Channel } from '@/lib/types'
+import { getBriefing } from '@/lib/api'
+import type { Channel } from '@/lib/types'
 
 function formatViews(n: number): string {
   if (n >= 1000) return `${(n / 1000).toFixed(1)}K`
@@ -29,22 +30,18 @@ export default function ScoreboardPage() {
     if (channelId === null) return
 
     setLoading(true)
-    fetch(`/api/briefing?channel=${channelId}`)
-      .then(r => r.json())
-      .then((data: DailyBriefing) => {
-        setChannelData(data.channels[0] ?? null)
-        setLoading(false)
-      })
+    getBriefing(channelId).then(data => {
+      setChannelData(data.channels[0] ?? null)
+      setLoading(false)
+    })
   }, [channelId])
 
-  // On first visit (nothing in localStorage), fetch hotChannel from briefing
+  // On first visit (nothing in localStorage), resolve the hot channel
   useEffect(() => {
     if (channelId !== null) return
-    fetch('/api/briefing')
-      .then(r => r.json())
-      .then((data: DailyBriefing) => {
-        setChannel(data.hotChannel)
-      })
+    getBriefing().then(data => {
+      setChannel(data.hotChannel)
+    })
   }, [channelId, setChannel])
 
   const accent = getChannelAccent(channelId)

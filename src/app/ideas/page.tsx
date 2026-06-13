@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useChannel } from '@/hooks/useChannel'
 import { IdeaCard } from '@/components/IdeaCard'
 import { getChannelAccent } from '@/lib/types'
+import { generateIdeas, goIdea } from '@/lib/api'
 import type { ContentIdea } from '@/lib/types'
 
 export default function PlayCallerPage() {
@@ -14,22 +15,16 @@ export default function PlayCallerPage() {
   const fetchIdeas = useCallback(() => {
     if (!channelId) return
     setLoading(true)
-    fetch(`/api/ideas/generate?channel=${channelId}`)
-      .then(r => r.json())
-      .then((data: { ideas: ContentIdea[] }) => {
-        setIdeas(data.ideas)
-        setLoading(false)
-      })
+    generateIdeas(channelId).then(ideas => {
+      setIdeas(ideas)
+      setLoading(false)
+    })
   }, [channelId])
 
   useEffect(() => { fetchIdeas() }, [fetchIdeas])
 
   async function handleGo(idea: ContentIdea) {
-    await fetch('/api/ideas/go', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ idea }),
-    })
+    await goIdea(idea)
   }
 
   const accent = getChannelAccent(channelId)

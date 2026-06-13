@@ -1,5 +1,6 @@
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react'
 import PlayCallerPage from '@/app/ideas/page'
+import { generateIdeas } from '@/lib/api'
 import type { ContentIdea } from '@/lib/types'
 
 const mockIdeas: ContentIdea[] = [
@@ -7,10 +8,10 @@ const mockIdeas: ContentIdea[] = [
   { id: 'wf-i1b', title: 'Palworld Is Back', outline: 'Trending searches show a Palworld spike.', contentType: 'short', channelTarget: 'wfrankn' },
 ]
 
-global.fetch = vi.fn().mockResolvedValue({
-  ok: true,
-  json: async () => ({ ideas: mockIdeas }),
-})
+vi.mock('@/lib/api', () => ({
+  generateIdeas: vi.fn(async () => mockIdeas),
+  goIdea: vi.fn(async () => ({ ok: true })),
+}))
 
 vi.mock('@/hooks/useChannel', () => ({
   useChannel: () => ({ channelId: 'wfrankn', setChannel: vi.fn() }),
@@ -31,6 +32,6 @@ describe('PlayCallerPage', () => {
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /shuffle/i }))
     })
-    expect(fetch).toHaveBeenCalledTimes(2)
+    expect(generateIdeas).toHaveBeenCalledTimes(2)
   })
 })
