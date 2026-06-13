@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import ScoreboardPage from '@/app/page'
 
-// Mock fetch
 const mockBriefing = {
   generatedAt: '2026-04-12T09:00:00Z',
   channels: [{
@@ -20,10 +19,9 @@ const mockBriefing = {
   trending: [],
 }
 
-global.fetch = vi.fn().mockResolvedValue({
-  ok: true,
-  json: async () => mockBriefing,
-})
+vi.mock('@/lib/api', () => ({
+  getBriefing: vi.fn(async () => mockBriefing),
+}))
 
 const mockSetChannel = vi.fn()
 
