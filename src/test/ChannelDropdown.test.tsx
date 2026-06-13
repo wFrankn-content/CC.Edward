@@ -7,29 +7,29 @@ describe('ChannelDropdown', () => {
   beforeEach(() => mockOnChange.mockClear())
 
   it('renders the active channel name', () => {
-    render(<ChannelDropdown channelId="wfrankn" onChange={mockOnChange} />)
-    expect(screen.getByText('wFrankn')).toBeInTheDocument()
+    render(<ChannelDropdown channelId="main" onChange={mockOnChange} />)
+    expect(screen.getByText('Main Channel')).toBeInTheDocument()
   })
 
   it('opens the channel list on click', () => {
-    render(<ChannelDropdown channelId="wfrankn" onChange={mockOnChange} />)
+    render(<ChannelDropdown channelId="main" onChange={mockOnChange} />)
     fireEvent.click(screen.getByRole('button'))
-    expect(screen.getByText('TechyFRNK')).toBeInTheDocument()
-    expect(screen.getByText('justFRNKNGaming')).toBeInTheDocument()
-    expect(screen.getByText('VGFAM')).toBeInTheDocument()
+    expect(screen.getByText('Tech Channel')).toBeInTheDocument()
+    expect(screen.getByText('Gaming Channel')).toBeInTheDocument()
+    expect(screen.getByText('Family Channel')).toBeInTheDocument()
   })
 
   it('calls onChange with the selected channel id', () => {
-    render(<ChannelDropdown channelId="wfrankn" onChange={mockOnChange} />)
+    render(<ChannelDropdown channelId="main" onChange={mockOnChange} />)
     fireEvent.click(screen.getByRole('button'))
-    fireEvent.click(screen.getByText('VGFAM'))
-    expect(mockOnChange).toHaveBeenCalledWith('vgfam')
+    fireEvent.click(screen.getByText('Family Channel'))
+    expect(mockOnChange).toHaveBeenCalledWith('family')
   })
 
   it('closes after selection', () => {
-    render(<ChannelDropdown channelId="wfrankn" onChange={mockOnChange} />)
+    render(<ChannelDropdown channelId="main" onChange={mockOnChange} />)
     fireEvent.click(screen.getByRole('button'))
-    fireEvent.click(screen.getByText('VGFAM'))
-    expect(screen.queryByText('TechyFRNK')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByText('Family Channel'))
+    expect(screen.queryByText('Tech Channel')).not.toBeInTheDocument()
   })
 })

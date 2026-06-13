@@ -4,8 +4,8 @@ import { generateIdeas } from '@/lib/api'
 import type { ContentIdea } from '@/lib/types'
 
 const mockIdeas: ContentIdea[] = [
-  { id: 'wf-i1a', title: 'I Tried Every Game That Blew Up This Week', outline: 'Steam charts show 3 breakout titles.', contentType: 'long', channelTarget: 'wfrankn' },
-  { id: 'wf-i1b', title: 'Palworld Is Back', outline: 'Trending searches show a Palworld spike.', contentType: 'short', channelTarget: 'wfrankn' },
+  { id: 'm-i1a', title: 'Idea concept one', outline: 'A placeholder outline for the first idea.', contentType: 'long', channelTarget: 'main' },
+  { id: 'm-i1b', title: 'Idea concept two', outline: 'A placeholder outline for the second idea.', contentType: 'short', channelTarget: 'main' },
 ]
 
 vi.mock('@/lib/api', () => ({
@@ -14,7 +14,7 @@ vi.mock('@/lib/api', () => ({
 }))
 
 vi.mock('@/hooks/useChannel', () => ({
-  useChannel: () => ({ channelId: 'wfrankn', setChannel: vi.fn() }),
+  useChannel: () => ({ channelId: 'main', setChannel: vi.fn() }),
 }))
 
 describe('PlayCallerPage', () => {
@@ -22,13 +22,13 @@ describe('PlayCallerPage', () => {
 
   it('renders idea titles after loading', async () => {
     render(<PlayCallerPage />)
-    await waitFor(() => screen.getByText('I Tried Every Game That Blew Up This Week'))
-    expect(screen.getByText('Palworld Is Back')).toBeInTheDocument()
+    await waitFor(() => screen.getByText('Idea concept one'))
+    expect(screen.getByText('Idea concept two')).toBeInTheDocument()
   })
 
   it('re-fetches ideas when Shuffle is clicked', async () => {
     render(<PlayCallerPage />)
-    await waitFor(() => screen.getByText('I Tried Every Game That Blew Up This Week'))
+    await waitFor(() => screen.getByText('Idea concept one'))
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /shuffle/i }))
     })
