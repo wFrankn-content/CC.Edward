@@ -4,9 +4,9 @@ import ScoreboardPage from '@/app/page'
 const mockBriefing = {
   generatedAt: '2026-04-12T09:00:00Z',
   channels: [{
-    id: 'wfrankn',
-    name: 'wFrankn',
-    handle: '@wFrankn',
+    id: 'main',
+    name: 'Main Channel',
+    handle: '@main',
     subscriberCount: 48200,
     subscriberDelta: 84,
     totalViews: 2100000,
@@ -14,7 +14,7 @@ const mockBriefing = {
       { id: 'v1', title: 'Test Video', publishedAt: '2026-04-10', views: 8420, viewsDelta: 1200, watchTimeMinutes: 42000, likes: 340, thumbnailUrl: '' },
     ],
   }],
-  hotChannel: 'wfrankn',
+  hotChannel: 'main',
   ideas: [],
   trending: [],
 }
@@ -26,7 +26,7 @@ vi.mock('@/lib/api', () => ({
 const mockSetChannel = vi.fn()
 
 vi.mock('@/hooks/useChannel', () => ({
-  useChannel: () => ({ channelId: 'wfrankn', setChannel: mockSetChannel }),
+  useChannel: () => ({ channelId: 'main', setChannel: mockSetChannel }),
 }))
 
 describe('ScoreboardPage', () => {
@@ -35,14 +35,14 @@ describe('ScoreboardPage', () => {
   it('renders skeleton cards initially then shows data', async () => {
     render(<ScoreboardPage />)
     await waitFor(() => {
-      expect(screen.getByText('wFrankn')).toBeInTheDocument()
+      expect(screen.getByText('Main Channel')).toBeInTheDocument()
     })
     expect(screen.getByText('Test Video')).toBeInTheDocument()
   })
 
   it('shows subscriber delta as subs stat', async () => {
     render(<ScoreboardPage />)
-    await waitFor(() => screen.getByText('wFrankn'))
+    await waitFor(() => screen.getByText('Main Channel'))
     expect(screen.getByText('+84')).toBeInTheDocument()
   })
 })

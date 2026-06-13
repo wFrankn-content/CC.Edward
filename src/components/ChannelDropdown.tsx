@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CHANNELS } from '@/lib/channels'
+import { getChannels } from '@/lib/channels'
 
 interface ChannelDropdownProps {
   channelId: string
@@ -10,7 +10,8 @@ interface ChannelDropdownProps {
 
 export function ChannelDropdown({ channelId, onChange }: ChannelDropdownProps) {
   const [open, setOpen] = useState(false)
-  const active = CHANNELS.find(c => c.id === channelId) ?? CHANNELS[0]!
+  const channels = getChannels()
+  const active = channels.find(c => c.id === channelId) ?? channels[0]!
 
   function select(id: string) {
     onChange(id)
@@ -40,7 +41,7 @@ export function ChannelDropdown({ channelId, onChange }: ChannelDropdownProps) {
           className="absolute top-full left-0 mt-1 rounded-lg overflow-hidden z-10 min-w-[180px]"
           style={{ background: 'var(--surface-elevated)', border: '1px solid var(--border)', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}
         >
-          {CHANNELS.map(channel => (
+          {channels.map(channel => (
             <button
               key={channel.id}
               onClick={() => select(channel.id)}

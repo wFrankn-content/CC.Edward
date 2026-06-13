@@ -3,15 +3,15 @@ import type { Channel, Video, ContentIdea, DailyBriefing, TrendingItem } from '@
 describe('types', () => {
   it('Channel has required fields', () => {
     const channel: Channel = {
-      id: 'wfrankn',
-      name: 'wFrankn',
-      handle: '@wFrankn',
+      id: 'main',
+      name: 'Main Channel',
+      handle: '@main',
       subscriberCount: 10000,
       subscriberDelta: 84,
       totalViews: 500000,
       recentVideos: [],
     }
-    expect(channel.id).toBe('wfrankn')
+    expect(channel.id).toBe('main')
   })
 
   it('ContentIdea contentType is a union', () => {
@@ -20,7 +20,7 @@ describe('types', () => {
       title: 'Test',
       outline: 'An outline.',
       contentType: 'short',
-      channelTarget: 'wfrankn',
+      channelTarget: 'main',
     }
     expect(['short', 'long', 'stream']).toContain(idea.contentType)
   })
@@ -29,10 +29,10 @@ describe('types', () => {
     const briefing: DailyBriefing = {
       generatedAt: new Date().toISOString(),
       channels: [],
-      hotChannel: 'wfrankn',
+      hotChannel: 'main',
       ideas: [],
       trending: [],
     }
-    expect(briefing.hotChannel).toBe('wfrankn')
+    expect(briefing.hotChannel).toBe('main')
   })
 })

@@ -1,6 +1,8 @@
 import { getBriefing, generateIdeas, goIdea } from '@/lib/api'
-import { CHANNELS } from '@/lib/channels'
+import { getChannels } from '@/lib/channels'
 import type { ContentIdea } from '@/lib/types'
+
+const CHANNELS = getChannels()
 
 describe('lib/api client', () => {
   it('getBriefing() returns a briefing with a hot channel', async () => {
