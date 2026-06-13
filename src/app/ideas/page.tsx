@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useChannel } from '@/hooks/useChannel'
 import { IdeaCard } from '@/components/IdeaCard'
-import { getChannelAccent } from '@/lib/types'
+import { getChannelAccent } from '@/lib/channels'
 import { generateIdeas, goIdea } from '@/lib/api'
 import type { ContentIdea } from '@/lib/types'
 

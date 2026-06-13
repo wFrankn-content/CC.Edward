@@ -41,16 +41,3 @@ export interface TrendingItem {
   source: 'steam_most_played' | 'steam_trending' | 'google_trends'
   metric: string
 }
-
-export const CHANNELS = [
-  { id: 'wfrankn',          name: 'wFrankn',           handle: '@wFrankn',           accent: '#3b82f6' },
-  { id: 'techyfrankn',      name: 'TechyFRNK',         handle: '@TechyFRNK',         accent: '#8b5cf6' },
-  { id: 'justfrankngaming', name: 'justFRNKNGaming',   handle: '@justFRNKNGaming',   accent: '#22c55e' },
-  { id: 'vgfam',            name: 'VGFAM',             handle: '@VGFAM',             accent: '#f59e0b' },
-] as const
-
-export type ChannelId = typeof CHANNELS[number]['id']
-
-export function getChannelAccent(channelId: string | null): string {
-  return CHANNELS.find(c => c.id === channelId)?.accent ?? '#3b82f6'
-}
