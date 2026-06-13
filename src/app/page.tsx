@@ -3,22 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useChannel } from '@/hooks/useChannel'
 import { ChannelSelector } from '@/components/ChannelSelector'
-import { StatCard } from '@/components/StatCard'
+import { ChannelCard } from '@/components/ChannelCard'
 import { VideoRow } from '@/components/VideoRow'
 import { getChannelAccent } from '@/lib/channels'
 import { getBriefing } from '@/lib/api'
 import type { Channel } from '@/lib/types'
-
-function formatViews(n: number): string {
-  if (n >= 1000) return `${(n / 1000).toFixed(1)}K`
-  return String(n)
-}
-
-function formatWatchTime(minutes: number): string {
-  const hours = Math.round(minutes / 60)
-  if (hours >= 1000) return `${(hours / 1000).toFixed(1)}K`
-  return `${hours}`
-}
 
 export default function ScoreboardPage() {
   const { channelId, setChannel } = useChannel()
@@ -45,9 +34,6 @@ export default function ScoreboardPage() {
   }, [channelId, setChannel])
 
   const accent = getChannelAccent(channelId)
-  const views48h = channel?.recentVideos.reduce((sum, v) => sum + v.viewsDelta, 0) ?? 0
-  const watchHrs = channel?.recentVideos.reduce((sum, v) => sum + v.watchTimeMinutes, 0) ?? 0
-  const subDelta = channel?.subscriberDelta ?? 0
 
   return (
     <div
@@ -66,26 +52,7 @@ export default function ScoreboardPage() {
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-3 gap-2 mb-4">
-        <StatCard
-          label="Views"
-          value={loading ? '' : formatViews(views48h)}
-          accent="var(--channel-accent)"
-          skeleton={loading}
-        />
-        <StatCard
-          label="Watch hrs"
-          value={loading ? '' : formatWatchTime(watchHrs)}
-          accent="var(--text-primary)"
-          skeleton={loading}
-        />
-        <StatCard
-          label="Subs"
-          value={loading ? '' : `${subDelta >= 0 ? '+' : ''}${subDelta}`}
-          accent={subDelta >= 0 ? 'var(--accent-green)' : '#ef4444'}
-          skeleton={loading}
-        />
-      </div>
+      <ChannelCard channel={channel} loading={loading} />
 
       {/* Top videos */}
       <p className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--text-secondary)' }}>
