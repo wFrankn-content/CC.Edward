@@ -14,6 +14,7 @@ export interface AppConfig {
   apiBaseUrl: string
   themeColor: string
   channels: ChannelConfig[]
+  useMock: boolean
 }
 
 // Fictional placeholders — keep the app runnable and the repo brand-free when no
@@ -60,11 +61,21 @@ function parseChannels(raw: string | undefined): ChannelConfig[] {
   })
 }
 
+function resolveUseMock(apiBaseUrl: string): boolean {
+  const explicit = process.env.NEXT_PUBLIC_USE_MOCK
+  if (explicit === 'true') return true
+  if (explicit === 'false') return false
+  // Default: use mock data whenever no backend URL is configured.
+  return apiBaseUrl === ''
+}
+
 export function getConfig(): AppConfig {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || ''
   return {
     appName: process.env.NEXT_PUBLIC_APP_NAME || 'Edward',
-    apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || '',
+    apiBaseUrl,
     themeColor: process.env.NEXT_PUBLIC_THEME_COLOR || '#0a0a0a',
     channels: parseChannels(process.env.NEXT_PUBLIC_CHANNELS),
+    useMock: resolveUseMock(apiBaseUrl),
   }
 }

@@ -5,6 +5,7 @@ const ENV_KEYS = [
   'NEXT_PUBLIC_APP_NAME',
   'NEXT_PUBLIC_API_BASE_URL',
   'NEXT_PUBLIC_THEME_COLOR',
+  'NEXT_PUBLIC_USE_MOCK',
 ] as const
 
 describe('getConfig', () => {
@@ -38,6 +39,21 @@ describe('getConfig', () => {
     expect(cfg.apiBaseUrl).toBe('')
     expect(cfg.themeColor).toBe('#0a0a0a')
     expect(cfg.channels.length).toBeGreaterThan(0)
+  })
+
+  it('defaults useMock to true when no API base URL is set', () => {
+    expect(getConfig().useMock).toBe(true)
+  })
+
+  it('uses the real backend when API base URL is set', () => {
+    process.env.NEXT_PUBLIC_API_BASE_URL = 'https://api.example.net'
+    expect(getConfig().useMock).toBe(false)
+  })
+
+  it('honors an explicit NEXT_PUBLIC_USE_MOCK override', () => {
+    process.env.NEXT_PUBLIC_API_BASE_URL = 'https://api.example.net'
+    process.env.NEXT_PUBLIC_USE_MOCK = 'true'
+    expect(getConfig().useMock).toBe(true)
   })
 
   it('reads optional scalar vars when present', () => {
