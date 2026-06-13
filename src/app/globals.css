@@ -43,3 +43,12 @@ body {
 .page-content {
   padding-bottom: calc(64px + env(safe-area-inset-bottom));
 }
+
+/* Hide scrollbar on horizontally-scrolling pill rows */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

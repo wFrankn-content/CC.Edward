@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useChannel } from '@/hooks/useChannel'
-import { ChannelDropdown } from '@/components/ChannelDropdown'
+import { ChannelSelector } from '@/components/ChannelSelector'
 import { StatCard } from '@/components/StatCard'
 import { VideoRow } from '@/components/VideoRow'
 import { getChannelAccent } from '@/lib/channels'
@@ -56,10 +56,12 @@ export default function ScoreboardPage() {
       style={{ '--channel-accent': accent } as React.CSSProperties}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        {channelId !== null && (
-          <ChannelDropdown channelId={channelId} onChange={setChannel} />
-        )}
+      {channelId !== null && (
+        <div className="mb-3">
+          <ChannelSelector channelId={channelId} onChange={setChannel} />
+        </div>
+      )}
+      <div className="flex items-center justify-end mb-3">
         <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>Last 48h</span>
       </div>
 
