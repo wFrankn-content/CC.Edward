@@ -21,6 +21,8 @@ const mockBriefing = {
 
 vi.mock('@/lib/api', () => ({
   getBriefing: vi.fn(async () => mockBriefing),
+  generateIdeas: vi.fn(async () => []),
+  goIdea: vi.fn(async () => ({ ok: true })),
 }))
 
 const mockSetChannel = vi.fn()

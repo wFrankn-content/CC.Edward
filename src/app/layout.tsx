@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
-import { BottomNav } from '@/components/BottomNav'
 import { getConfig } from '@/lib/config'
 import './globals.css'
 
@@ -31,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="page-content">
           {children}
         </main>
-        <BottomNav />
       </body>
     </html>
   )

@@ -5,6 +5,7 @@ import { useChannel } from '@/hooks/useChannel'
 import { ChannelSelector } from '@/components/ChannelSelector'
 import { ChannelCard } from '@/components/ChannelCard'
 import { VideoRow } from '@/components/VideoRow'
+import { PlayCaller } from '@/components/PlayCaller'
 import { getChannelAccent } from '@/lib/channels'
 import { getBriefing } from '@/lib/api'
 import type { Channel } from '@/lib/types'
@@ -68,6 +69,9 @@ export default function ScoreboardPage() {
             ))
         }
       </div>
+
+      {/* Screen 2 — Play Caller (scroll down) */}
+      <PlayCaller />
     </div>
   )
 }
