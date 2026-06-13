@@ -3,11 +3,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useChannel } from '@/hooks/useChannel'
 import { IdeaCard } from '@/components/IdeaCard'
-import { getChannelAccent } from '@/lib/channels'
 import { generateIdeas, goIdea } from '@/lib/api'
 import type { ContentIdea } from '@/lib/types'
 
-export default function PlayCallerPage() {
+// Screen 2 — content ideas for the active channel, rendered below the scoreboard
+// on the same page. Inherits --channel-accent from the page container.
+export function PlayCaller() {
   const { channelId } = useChannel()
   const [ideas, setIdeas] = useState<ContentIdea[]>([])
   const [loading, setLoading] = useState(true)
@@ -15,8 +16,8 @@ export default function PlayCallerPage() {
   const fetchIdeas = useCallback(() => {
     if (!channelId) return
     setLoading(true)
-    generateIdeas(channelId).then(ideas => {
-      setIdeas(ideas)
+    generateIdeas(channelId).then(next => {
+      setIdeas(next)
       setLoading(false)
     })
   }, [channelId])
@@ -27,19 +28,12 @@ export default function PlayCallerPage() {
     await goIdea(idea)
   }
 
-  const accent = getChannelAccent(channelId)
-
   return (
-    <div
-      data-testid="playcaller-root"
-      className="px-4 pt-5 pb-2 max-w-lg mx-auto"
-      style={{ '--channel-accent': accent } as React.CSSProperties}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)' }}>
+    <section className="mt-7">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)' }}>
           Today&apos;s Ideas
-        </h1>
+        </h2>
         <button
           onClick={fetchIdeas}
           className="text-[12px] font-medium px-3 py-1.5 rounded-lg"
@@ -50,7 +44,6 @@ export default function PlayCallerPage() {
         </button>
       </div>
 
-      {/* Idea cards */}
       <div className="flex flex-col gap-3">
         {loading
           ? Array.from({ length: 3 }).map((_, i) => (
@@ -73,6 +66,6 @@ export default function PlayCallerPage() {
             ))
         }
       </div>
-    </div>
+    </section>
   )
 }
