@@ -5,7 +5,7 @@ import { useChannel } from '@/hooks/useChannel'
 import { ChannelDropdown } from '@/components/ChannelDropdown'
 import { StatCard } from '@/components/StatCard'
 import { VideoRow } from '@/components/VideoRow'
-import { getChannelAccent } from '@/lib/types'
+import { getChannelAccent } from '@/lib/channels'
 import { getBriefing } from '@/lib/api'
 import type { Channel } from '@/lib/types'
 

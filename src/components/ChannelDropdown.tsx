@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CHANNELS } from '@/lib/types'
+import { CHANNELS } from '@/lib/channels'
 
 interface ChannelDropdownProps {
   channelId: string

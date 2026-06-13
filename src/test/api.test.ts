@@ -1,5 +1,5 @@
 import { getBriefing, generateIdeas, goIdea } from '@/lib/api'
-import { CHANNELS } from '@/lib/types'
+import { CHANNELS } from '@/lib/channels'
 import type { ContentIdea } from '@/lib/types'
 
 describe('lib/api client', () => {
