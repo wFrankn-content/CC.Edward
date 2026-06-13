@@ -4,6 +4,7 @@ describe('PWA manifest', () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_APP_NAME
     delete process.env.NEXT_PUBLIC_THEME_COLOR
+    delete process.env.NEXT_PUBLIC_BASE_PATH
   })
 
   it('uses default app name and theme color when env is unset', () => {
@@ -26,5 +27,19 @@ describe('PWA manifest', () => {
     const sizes = manifest().icons?.map(i => i.sizes)
     expect(sizes).toContain('192x192')
     expect(sizes).toContain('512x512')
+  })
+
+  it('uses root paths when no basePath is set', () => {
+    const m = manifest()
+    expect(m.start_url).toBe('/')
+    expect(m.icons?.[0]?.src).toBe('/icons/icon-192.png')
+  })
+
+  it('prefixes start_url, scope and icons with basePath', () => {
+    process.env.NEXT_PUBLIC_BASE_PATH = '/CC.Edward'
+    const m = manifest()
+    expect(m.start_url).toBe('/CC.Edward/')
+    expect(m.scope).toBe('/CC.Edward/')
+    expect(m.icons?.[0]?.src).toBe('/CC.Edward/icons/icon-192.png')
   })
 })

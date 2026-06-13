@@ -6,6 +6,7 @@ const ENV_KEYS = [
   'NEXT_PUBLIC_API_BASE_URL',
   'NEXT_PUBLIC_THEME_COLOR',
   'NEXT_PUBLIC_USE_MOCK',
+  'NEXT_PUBLIC_BASE_PATH',
 ] as const
 
 describe('getConfig', () => {
@@ -39,6 +40,12 @@ describe('getConfig', () => {
     expect(cfg.apiBaseUrl).toBe('')
     expect(cfg.themeColor).toBe('#0a0a0a')
     expect(cfg.channels.length).toBeGreaterThan(0)
+    expect(cfg.basePath).toBe('')
+  })
+
+  it('reads basePath from NEXT_PUBLIC_BASE_PATH', () => {
+    process.env.NEXT_PUBLIC_BASE_PATH = '/CC.Edward'
+    expect(getConfig().basePath).toBe('/CC.Edward')
   })
 
   it('defaults useMock to true when no API base URL is set', () => {
