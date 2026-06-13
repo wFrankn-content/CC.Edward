@@ -30,7 +30,11 @@ export default function PlayCallerPage() {
   const accent = getChannelAccent(channelId)
 
   return (
-    <div className="px-4 pt-5 pb-2 max-w-lg mx-auto">
+    <div
+      data-testid="playcaller-root"
+      className="px-4 pt-5 pb-2 max-w-lg mx-auto"
+      style={{ '--channel-accent': accent } as React.CSSProperties}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)' }}>
@@ -53,7 +57,7 @@ export default function PlayCallerPage() {
               <IdeaCard
                 key={i}
                 idea={{ id: '', title: '', outline: '', contentType: 'long', channelTarget: '' }}
-                accent={accent}
+                accent="var(--channel-accent)"
                 onGo={() => {}}
                 skeleton
               />
@@ -62,7 +66,7 @@ export default function PlayCallerPage() {
               <IdeaCard
                 key={idea.id}
                 idea={idea}
-                accent={accent}
+                accent="var(--channel-accent)"
                 onGo={handleGo}
                 primary={i === 0}
               />

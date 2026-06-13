@@ -45,4 +45,11 @@ describe('ScoreboardPage', () => {
     await waitFor(() => screen.getByText('Main Channel'))
     expect(screen.getByText('+84')).toBeInTheDocument()
   })
+
+  it('exposes the active channel accent as a --channel-accent CSS variable', async () => {
+    render(<ScoreboardPage />)
+    await waitFor(() => screen.getByText('Main Channel'))
+    const root = screen.getByTestId('scoreboard-root')
+    expect(root.style.getPropertyValue('--channel-accent')).toBe('#3b82f6')
+  })
 })
