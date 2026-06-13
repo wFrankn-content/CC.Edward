@@ -1,23 +1,25 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
 import { BottomNav } from '@/components/BottomNav'
+import { getConfig } from '@/lib/config'
 import './globals.css'
 
 const geist = Geist({ subsets: ['latin'] })
+const config = getConfig()
 
 export const metadata: Metadata = {
-  title: 'Edward',
+  title: config.appName,
   description: 'Morning briefing for content creators',
-  manifest: '/manifest.json',
+  manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Edward',
+    title: config.appName,
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a0a',
+  themeColor: config.themeColor,
   width: 'device-width',
   initialScale: 1,
 }
