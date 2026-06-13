@@ -15,6 +15,8 @@ export interface AppConfig {
   themeColor: string
   channels: ChannelConfig[]
   useMock: boolean
+  /** Subpath prefix when hosted under a project path (e.g. "/CC.Edward"); "" at root. */
+  basePath: string
 }
 
 // Fictional placeholders — keep the app runnable and the repo brand-free when no
@@ -77,5 +79,6 @@ export function getConfig(): AppConfig {
     themeColor: process.env.NEXT_PUBLIC_THEME_COLOR || '#0a0a0a',
     channels: parseChannels(process.env.NEXT_PUBLIC_CHANNELS),
     useMock: resolveUseMock(apiBaseUrl),
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   }
 }
