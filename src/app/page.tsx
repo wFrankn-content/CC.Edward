@@ -50,7 +50,11 @@ export default function ScoreboardPage() {
   const subDelta = channel?.subscriberDelta ?? 0
 
   return (
-    <div className="px-4 pt-5 pb-2 max-w-lg mx-auto">
+    <div
+      data-testid="scoreboard-root"
+      className="px-4 pt-5 pb-2 max-w-lg mx-auto"
+      style={{ '--channel-accent': accent } as React.CSSProperties}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         {channelId !== null && (
@@ -64,7 +68,7 @@ export default function ScoreboardPage() {
         <StatCard
           label="Views"
           value={loading ? '' : formatViews(views48h)}
-          accent={accent}
+          accent="var(--channel-accent)"
           skeleton={loading}
         />
         <StatCard
